@@ -13,6 +13,8 @@ DB(팀 플레이 설계)
 - 박찬진
 - 이성준
 - 이수경
+
+
 Mysql 기반 AMAZON RDS 사용
 DB Query - 이성준, 이수경
 Query 최적화 - 김주영
