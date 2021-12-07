@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### DB ###
+/src/main/java/com/example/SendingToPro/config/DBConfig.java
+/src/main/java/com/example/SendingToPro/config/ApplicationConfig.java
+/src/main/java/com/example/SendingToPro/config/*
