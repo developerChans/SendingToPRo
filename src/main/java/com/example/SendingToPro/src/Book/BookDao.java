@@ -47,18 +47,20 @@ public class BookDao {
 
     // 판매 교재 조회
     public List<GetBookSellListRes> getBookSellList(int lectureIndex) {
-        String getBookSellListQuery = "";
+        String getBookSellListQuery = "SELECT Sell.sellId, Sell.studId, case when Sell.contactState = 1 then Student.studPhoneNum else Student.studEmail end as Contact ,case when Sell.bookState = 0 then '나쁨' when Sell.bookState = 1 then '보통' else '좋음' end as BookState ,Sell.sellPrice ,case when Sell.sellState = 0 then '판매중' when Sell.sellState = 1 then '판매취소' else '판매완료' end as SellState, Sell.sellPrice, Sell.sellorText, TB.publisher, TB.bookName, TB.author, TB.bookEdition FROM Sell JOIN Student ON Student.studId = Sell.studId join TextBook TB on Sell.bookId = TB.bookId join LectureBook as LB on TB.bookId=LB.bookId WHERE LB.lecId = ?;";
         return this.jdbcTemplate.query(getBookSellListQuery,
             (rs,rowNum) -> new GetBookSellListRes(
+                rs.getInt("sellId"),
                 rs.getInt("studId"),
+                rs.getString("contact"),
+                rs.getString("bookState"),
+                rs.getString("sellState"),
+                rs.getInt("sellPrice"),
+                rs.getString("sellorText"),
+                rs.getString("publisher"),
                 rs.getString("bookName"),
                 rs.getString("author"),
-                rs.getString("bookEdition"),
-                rs.getInt("bookPrice"),
-                rs.getString("bookState"),
-                rs.getString("contact"),
-                rs.getString("sellorText"),
-                rs.getString("sellState")
+                rs.getString("bookEdition")     
             ),
             lectureIndex);
     }

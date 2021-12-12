@@ -21,48 +21,81 @@ public class ProfessorDao {
 
     // GET 과목 검색
     public List<GetClassRes> getClassList(String SearchKeyWord) {
-        String getClassListQuery = "select pro.profName , l.subjectName from Professor as pro join Lecture as l on pro.profid=l.profId where pro.profName like '최종무%' ;";
+        String getClassListQuery = "select pro.profName , l.subjectName,l.lecId from Professor as pro join Lecture as l on pro.profid=l.profId where pro.profName like concat('%',?,'%')  or l.subjectName like concat('%',?,'%');";
+        Object[] getClassListParams = new Object[]{SearchKeyWord, SearchKeyWord};
         return this.jdbcTemplate.query(getClassListQuery,
             (rs,rowNum) -> new GetClassRes(
                 rs.getString("profName"),
                 rs.getString("subjectName")
             ),
-            SearchKeyWord);
+            getClassListParams);
     }
 
     // GET 과목 정보 조회
     public GetClassDataRes getClassData(int lectureIndex) {
-        String getClassDataQuery = "select profName,proE.email ,profPhoneNum,l.subjectName from Professor as pro join Lecture as l on pro.profid=l.profId join ProfessorEmail as proE on pro.profid=proE.profId where pro.profName like '%최종무%'  or l.subjectName like '%시스템%';";
+        String getClassDataQuery = "select P.profName, P.profPhoneNum , PE.email as profEmail ,L.subjectName , TB.bookImageUrl , TB.bookName, TB.author, TB.bookEdition, TB.bookPrice, LB.lecId, LB.bookId from Lecture as L join Professor as P on P.profid= L.profId join ProfessorEmail PE on P.profid = PE.profId join LectureBook LB on L.lecId = LB.lecId join TextBook TB on LB.bookId = TB.bookId where L.lecId=?;";
         return this.jdbcTemplate.queryForObject(getClassDataQuery,
             (rs,rowNum) -> new GetClassDataRes(
                 rs.getString("profName"),
-                rs.getString("email"),
                 rs.getString("profPhoneNum"),
-                rs.getString("subjectName")
+                rs.getString("profEmail"),
+                rs.getString("subjectName"),
+                rs.getString("bookImageUrl"),
+                rs.getString("bookName"),
+                rs.getString("author"),
+                rs.getString("bookEdition"),
+                rs.getInt("bookPrice"),
+                rs.getInt("lecId"),
+                rs.getInt("bookId")
             ),
             lectureIndex);
     }
 
     // GET 특정 과목 게시판 조회
     public List<GetClassNoticeRes> getClassNoticeList(int lectureIndex) {
-        String getClassNoticeListQuery = "select pro.profName, pb.boardId, pb.title, L.subjectName, pb.content, bi.ImageUrl from Professor as pro join ProfessorBoard as pb on pro.profid = pb.profId join Lecture as L on pb.lecId = L.lecId left join BoardImage as bi on bi.boardId = pb.boardId where L.lecId = ? order by pb.createdAt;";
+        String getClassNoticeListQuery = "select pro.profName, pb.boardId, pb.title,L.subjectName, date_format(pb.createdAt,'%Y-%m-%d') as createdAt from Professor as pro join ProfessorBoard as pb on pro.profid = pb.profId join Lecture L on pb.lecId = L.lecId where L.lecId = ? order by pb.createdAt;";
         return this.jdbcTemplate.query(getClassNoticeListQuery,
             (rs,rowNum) -> new GetClassNoticeRes(
                 rs.getString("profName"),
                 rs.getInt("boardId"),
                 rs.getString("title"),
                 rs.getString("subjectName"),
-                rs.getString("content"),
-                rs.getString("ImageUrl")
+                rs.getTimestamp("createdAt")
             ),
             lectureIndex);
     }
 
     // POST 특정 과목 게시판 글쓰기  
+    public int addClassNotice(PostClassNoticeNoEmailReq postClassNoticeNoEmailReq) {
+        String addClassNoticeQuery = "insert into ProfessorBoard (profId,lecId,title,content) values (?,?,?,?);";
+        Object[] addClassNoticeParams = new Object[]{postClassNoticeNoEmailReq.getProfId(), postClassNoticeNoEmailReq.getLecId(), 
+        postClassNoticeNoEmailReq.getTitle(), postClassNoticeNoEmailReq.getContent()};
+        this.jdbcTemplate.update(addClassNoticeQuery, addClassNoticeParams);
+
+        String lastClassNoticeInsertIdQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastClassNoticeInsertIdQuery, int.class);
+    }
+
+    // 특정 과목 게시판 이미지 넣기
+    public void addClassNoticeImg(PostClassNoticeImgReq postClassNoticeImgReq) {
+        String addClassNoticeImgQuery = "insert into BoardImage (boardId, ImageUrl) values (?,?);";
+        Object[] addClassNoticeImgParams = new Object[]{postClassNoticeImgReq.getBoardId(), postClassNoticeImgReq.getImageUrl()};
+        this.jdbcTemplate.update(addClassNoticeImgQuery, addClassNoticeImgParams);
+    }
+
+    // 삭제
+    public int deleteClassNotice(DeleteClassNoticeReq deleteClassNoticeReq) {
+        String deleteClassNoticeQuery = "update ProfessorBoard set status=1 where boardId=?;";
+        String deleteClassNoticeImgQuery = "update BoardImage set status = 1 where boardId=?;";
+        Object[] deleteClassNoticeParams = new Object[]{deleteClassNoticeReq.getBoardId()};
+
+        this.jdbcTemplate.update(deleteClassNoticeImgQuery, deleteClassNoticeParams);
+        return this.jdbcTemplate.update(deleteClassNoticeQuery,deleteClassNoticeParams); 
+    }
 
     // GET 특정 게시글 정보 조회
     public GetClassNoticeDataRes getClassNoticeData(int boardIndex) {
-        String getClassNoticeDataQuery = "select pro.profName, pb.boardId, pb.title, L.subjectName, pb.content, bi.ImageUrl, date_format(pb.createdAt,'%Y-%m-%d') from Professor as pro join ProfessorBoard as pb on pro.profid = pb.profId join Lecture as L on pb.lecId = L.lecId left join BoardImage as bi on bi.boardId = pb.boardId where pb.boardId = ?;";
+        String getClassNoticeDataQuery = "select pro.profName, pb.boardId, pb.title, L.subjectName, pb.content, bi.ImageUrl from Professor as pro join ProfessorBoard as pb on pro.profid = pb.profId join Lecture as L on pb.lecId = L.lecId left join BoardImage as bi on bi.boardId = pb.boardId where pb.boardId = ? and pb.status=0 ;";
         return this.jdbcTemplate.queryForObject(getClassNoticeDataQuery, 
             (rs,rowNum) -> new GetClassNoticeDataRes(
                 rs.getString("profName"),
@@ -70,17 +103,9 @@ public class ProfessorDao {
                 rs.getString("title"),
                 rs.getString("subjectName"),
                 rs.getString("content"),
-                rs.getString("ImageUrl"),
-                rs.getString("createdAt")
+                rs.getString("ImageUrl")
             ),
             boardIndex);
     }
-
-    
-
-
-
-
-
 
 }

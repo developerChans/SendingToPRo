@@ -10,13 +10,15 @@ import lombok.Setter;
 
 
 public class GetBookSellListRes {
+    private int sellId;
     private int studId;
+    private String contact;
+    private String bookState;
+    private String sellState;
+    private int sellPrice;
+    private String sellorText;
+    private String publisher;
     private String bookName;
     private String author;
     private String bookEdition;
-    private int bookPrice;
-    private String bookState;
-    private String contact;
-    private String sellorText;
-    private String sellState;
 }

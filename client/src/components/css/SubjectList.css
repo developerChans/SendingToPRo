@@ -1,0 +1,121 @@
+.Subject {
+    position: static;
+    width: 870px;
+    height: 31px;
+    left: 0px;
+    top: 0px;
+    
+    
+    /* Inside Auto Layout */
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 4px 0px;
+}
+
+.Left-Section {
+    position: absolute;
+    width: 175px;
+    height: 31px;
+    left: 0px;
+    top: 0px;
+}
+
+.Left-Rectangle {
+    position: absolute;
+    left: 0%;
+    right: 79.89%;
+    top: 3.23%;
+    bottom: 3.23%;
+    
+    background: #FFFFFF;
+}
+
+.Subject-Professor {
+    position: absolute;
+    left: 0.57%;
+    right: 80.23%;
+    top: 0%;
+    bottom: 0%;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.Right-Section {
+    position: absolute;
+    width: 686px;
+    height: 32px;
+    left: 184px;
+    top: 1px;
+}
+
+.Right-Rectangle {
+    position: absolute;
+    left: 21.15%;
+    right: 0%;
+    top: 6.45%;
+    bottom: 0%;
+    
+    background: #FFFFFF;
+}
+
+.Subject-Name {
+    position: absolute;
+    left: 22.64%;
+    right: 32.18%;
+    top: 9.68%;
+    bottom: -6.45%;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    
+    color: #000000;
+}
+
+.Lecture-Data-Button {
+    position: absolute;
+    left: 80.11%;
+    right: 5.75%;
+    top: 16.13%;
+    bottom: 12.9%;
+    
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+.Button-Text {
+    position: absolute;
+    width: 73px;
+    height: 12.17px;
+    left: 722px;
+    top: 10px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}

@@ -1,0 +1,147 @@
+.Search-List-Section {
+    position: relative;
+    width: 878px;
+    height: 421px;
+    left: 139px;
+    top: 111px;
+}
+
+.Search-Section {
+    position: relative;
+    width: 745px;
+    height: 48px;
+    left: 203px;
+    top: 111px;
+}
+
+.Search-Background {
+    position: absolute;
+    width: 745px;
+    height: 48px;
+    left: 203px;
+    top: 111px;
+    
+    background: #FFFFFF;
+    border: 2px solid #383838;
+    box-sizing: border-box;
+}
+
+.Search-Text {
+    position: absolute;
+    width: 687px;
+    height: 19px;
+
+    
+    left: 237px;
+    top: 126px;
+    
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    
+    display: flex;
+    align-items: center;
+    
+    color: #717171;
+}
+
+.Lecture-List-Text {
+    position: absolute;
+    width: 206px;
+    height: 32px;
+    left: 139px;
+    top: 178px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    
+    color: #000000;
+}
+
+.Left-Box {
+    position: absolute;
+    width: 181px;
+    height: 36px;
+    left: 139px;
+    top: 216px;    
+}
+
+.Left-Box-Rectangle {
+    position: absolute;
+    width: 181px;
+    height: 36px;
+    left: 139px;
+    top: 216px;
+    
+    background: #A17DD9;
+}
+
+.Left-Box-Text {
+    position: absolute;
+    width: 60px;
+    height: 21px;
+    left: 204px;
+    top: 223px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #FFFFFF;
+}
+
+.Right-Box {
+    position: absolute;
+    width: 694px;
+    height: 36px;
+    left: 323px;
+    top: 216px;    
+}
+
+.Right-Box-Rectangel {
+    position: absolute;
+    width: 694px;
+    height: 36px;
+    left: 323px;
+    top: 216px;
+    
+    background: #A17DD9;
+}
+
+.Right-Box-Text {
+    position: absolute;
+    width: 40px;
+    height: 21px;
+    left: 652px;
+    top: 223px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #FFFFFF;
+    
+}

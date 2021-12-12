@@ -8,11 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 
-public class GetClassNoticeDataRes{
-    private String profName;
+public class DeleteClassNoticeReq {
     private int boardId;
-    private String title;
-    private String subjectName;
-    private String content;
-    private String ImageUrl;
 }

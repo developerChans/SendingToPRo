@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 
-public class PostClassRes {
-    
+public class PatchStudentDataRes {
+    private String jwt;
+    private int studId;
 }

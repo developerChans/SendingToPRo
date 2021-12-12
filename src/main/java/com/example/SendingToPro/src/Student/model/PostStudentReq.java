@@ -8,6 +8,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 
-public class PostMailFormRes {
-    
+public class PostStudentReq {
+    private String studName;
+    private String studPhoneNum;
+    private String studEmail;
+    private String password;
 }

@@ -11,4 +11,7 @@ import lombok.Setter;
 public class Student {
     private int studId;
     private String studName;
+    private String studPhoneNum;
+    private String email;
+    private String password;
 }
