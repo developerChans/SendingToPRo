@@ -1,5 +1,6 @@
 # SendingToPro
-데이터베이스설계 팀플(React - Spring Boot MAVEN JDBC Restful API)
+데이터베이스설계 팀플(React - Spring Boot MAVEN JDBC Restful API) <br>
+(2021.12.08 ~ 2021.12.12)
 
 사용기술
 Design : Figma <br>
